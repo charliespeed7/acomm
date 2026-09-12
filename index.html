@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>acomm. — get agent first</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acomm-green: #1B4D3E;
+  --acomm-green-bright: #2D7A5F;
+  --acomm-cream: #F5F0E8;
+  --acomm-paper: #FAF7F1;
+  --acomm-ink: #1A1815;
+  --acomm-stone: #C4BFB5;
+  --acomm-stone-dark: #8B8578;
+  --acomm-clay: #C97B5A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--acomm-cream);
+  font-family: 'Inter', sans-serif;
+  color: var(--acomm-ink);
+  overflow-x: hidden;
+}
+
+/* === NAV === */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 48px;
+  backdrop-filter: blur(20px);
+  background: rgba(245, 240, 232, 0.8);
+  border-bottom: 1px solid rgba(26, 24, 21, 0.05);
+}
+.nav-brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  color: var(--acomm-ink);
+}
+.nav-brand .dot { color: var(--acomm-green); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 500; letter-spacing: -0.01em;
+  color: var(--acomm-ink); text-decoration: none;
+  opacity: 0.5; transition: opacity 0.2s;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-cta {
+  padding: 10px 24px;
+  background: var(--acomm-green);
+  color: var(--acomm-cream);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700; font-size: 14px;
+  border-radius: 100px; text-decoration: none;
+  border: none; cursor: pointer; opacity: 1 !important;
+  transition: transform 0.15s;
+}
+.nav-cta:hover { transform: translateY(-2px); }
+
+/* === HERO === */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 120px 48px 80px;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--acomm-green);
+  margin-bottom: 40px;
+  letter-spacing: 0.02em;
+}
+.hero-headline {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(3rem, 10vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  color: var(--acomm-ink);
+  max-width: 1000px;
+  margin-bottom: 24px;
+}
+.hero-headline .italic { font-style: italic; font-weight: 400; color: var(--acomm-green); }
+.hero-headline .dot { color: var(--acomm-green); }
+.hero-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--acomm-stone-dark);
+  max-width: 500px;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 40px;
+  background: var(--acomm-green);
+  color: var(--acomm-cream);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700; font-size: 16px;
+  border-radius: 100px; text-decoration: none;
+  border: none; cursor: pointer;
+  transition: transform 0.15s;
+}
+.hero-cta:hover { transform: translateY(-2px); }
+
+.hero-syntax {
+  margin-top: 80px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--acomm-stone-dark);
+  opacity: 0.5;
+}
+
+/* === SECTIONS === */
+.section {
+  padding: 160px 48px;
+  position: relative;
+}
+.section-dark { background: var(--acomm-ink); color: var(--acomm-cream); }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--acomm-green);
+  margin-bottom: 32px;
+  letter-spacing: 0.02em;
+}
+.section-dark .eyebrow { color: var(--acomm-green-bright); }
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  color: var(--acomm-ink);
+  max-width: 900px;
+  margin-bottom: 32px;
+}
+.section-dark .section-title { color: var(--acomm-cream); }
+.section-title .italic { font-style: italic; font-weight: 400; color: var(--acomm-green); }
+.section-dark .section-title .italic { color: var(--acomm-green-bright); }
+.section-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--acomm-stone-dark);
+  max-width: 580px;
+  font-weight: 400;
+}
+.section-dark .section-body { color: rgba(245,240,232,0.5); }
+.section-body strong { color: var(--acomm-ink); font-weight: 600; }
+.section-dark .section-body strong { color: var(--acomm-cream); }
+
+/* === STATS STRIP === */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 80px;
+  border-top: 1px solid rgba(26,24,21,0.08);
+  border-bottom: 1px solid rgba(26,24,21,0.08);
+}
+.stat {
+  padding: 48px 32px;
+  border-right: 1px solid rgba(26,24,21,0.08);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--acomm-green);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--acomm-stone-dark);
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+/* === RAILS STRIP === */
+.rails-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 80px;
+  border-top: 1px solid rgba(245,240,232,0.08);
+}
+.rail {
+  padding: 48px 32px;
+  border-right: 1px solid rgba(245,240,232,0.08);
+}
+.rail:last-child { border-right: none; }
+.rail-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--acomm-green-bright);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.rail-full {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--acomm-cream);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.rail-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(245,240,232,0.5);
+}
+.rail-status {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--acomm-green-bright);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* === NUMBERED LIST === */
+.numbered-list {
+  margin-top: 80px;
+  border-top: 1px solid rgba(245,240,232,0.08);
+}
+.num-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 32px;
+  padding: 36px 0;
+  border-bottom: 1px solid rgba(245,240,232,0.08);
+  align-items: baseline;
+}
+.num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--acomm-green-bright);
+}
+.num-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--acomm-cream);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.num-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(245,240,232,0.5);
+  max-width: 600px;
+}
+
+/* === WHY STRIP === */
+.why-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-top: 80px;
+  border-top: 1px solid rgba(26,24,21,0.08);
+}
+.why {
+  padding: 48px 32px;
+  border-right: 1px solid rgba(26,24,21,0.08);
+  border-bottom: 1px solid rgba(26,24,21,0.08);
+}
+.why:nth-child(2n) { border-right: none; }
+.why:nth-last-child(-n+2) { border-bottom: none; }
+.why-icon {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--acomm-green);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.why-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--acomm-ink);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.why-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--acomm-stone-dark);
+}
+
+/* === CALC === */
+.calc-wrap {
+  margin-top: 80px;
+}
+.calc-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.calc-field { margin-bottom: 24px; }
+.calc-field label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(245,240,232,0.6);
+  margin-bottom: 8px;
+}
+.calc-field input, .calc-field select {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid rgba(245,240,232,0.1);
+  border-radius: 12px;
+  background: rgba(245,240,232,0.05);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  color: var(--acomm-cream);
+}
+.calc-field input:focus, .calc-field select:focus {
+  outline: 2px solid var(--acomm-green-bright);
+  outline-offset: 1px;
+}
+.calc-results { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.calc-result {
+  padding: 24px;
+  border: 1px solid rgba(245,240,232,0.08);
+  border-radius: 12px;
+}
+.calc-result-num {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 36px;
+  color: var(--acomm-green-bright);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.calc-result-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(245,240,232,0.4);
+  line-height: 1.4;
+}
+.calc-cta { margin-top: 40px; }
+
+/* === PACKAGES STRIP === */
+.packages-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 80px;
+  border-top: 1px solid rgba(26,24,21,0.08);
+  border-bottom: 1px solid rgba(26,24,21,0.08);
+}
+.pkg {
+  padding: 48px 32px;
+  border-right: 1px solid rgba(26,24,21,0.08);
+}
+.pkg:last-child { border-right: none; }
+.pkg-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--acomm-green);
+  margin-bottom: 20px;
+}
+.pkg-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 28px;
+  color: var(--acomm-ink);
+  margin-bottom: 16px;
+  letter-spacing: -0.03em;
+}
+.pkg-name .dot { color: var(--acomm-green); }
+.pkg-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--acomm-stone-dark);
+}
+
+/* === CONTACT === */
+.contact-section {
+  text-align: center;
+}
+.contact-section .section-title {
+  margin: 0 auto 40px;
+}
+.contact-email {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--acomm-cream);
+  text-decoration: none;
+  border-bottom: 2px solid var(--acomm-green-bright);
+  padding-bottom: 4px;
+}
+
+/* === FOOTER === */
+.footer {
+  background: var(--acomm-ink);
+  padding: 32px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--acomm-green-bright);
+}
+.footer-brand .dot { color: rgba(45,122,95,0.4); }
+.footer-url {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.2);
+}
+
+/* === CHAT WIDGET === */
+.chat-toggle {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 200;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--acomm-green);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 32px rgba(27,77,62,0.3);
+  transition: transform 0.2s;
+}
+.chat-toggle:hover { transform: scale(1.05); }
+.chat-toggle svg { fill: var(--acomm-cream); width: 24px; height: 24px; }
+.chat-panel {
+  position: fixed;
+  bottom: 88px; right: 24px;
+  z-index: 200;
+  width: 380px; max-width: calc(100vw - 48px);
+  height: 500px; max-height: 70vh;
+  background: var(--acomm-paper);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  background: var(--acomm-green);
+  color: var(--acomm-cream);
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chat-header-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+}
+.chat-header-title .dot { color: rgba(245,240,232,0.5); }
+.chat-close {
+  background: none; border: none;
+  color: var(--acomm-cream);
+  font-size: 20px; cursor: pointer; opacity: 0.7;
+}
+.chat-close:hover { opacity: 1; }
+.chat-messages {
+  flex: 1; overflow-y: auto;
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.chat-msg {
+  max-width: 85%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.chat-msg.bot {
+  background: var(--acomm-cream);
+  color: var(--acomm-ink);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.chat-msg.user {
+  background: var(--acomm-green);
+  color: var(--acomm-cream);
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+.chat-typing {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--acomm-stone-dark);
+  padding: 8px 18px;
+}
+.chat-input-area {
+  border-top: 1px solid rgba(26,24,21,0.08);
+  padding: 16px 20px;
+  display: flex; gap: 12px; align-items: center;
+}
+.chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid rgba(26,24,21,0.1);
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  background: var(--acomm-cream);
+  color: var(--acomm-ink);
+  border: none;
+}
+.chat-input:focus { outline: 2px solid var(--acomm-green); outline-offset: 1px; }
+.chat-send {
+  width: 38px; height: 38px;
+  border-radius: 50%; border: none;
+  background: var(--acomm-green); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.chat-send svg { fill: var(--acomm-cream); width: 16px; height: 16px; }
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .nav { padding: 14px 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-cta { padding: 8px 18px; font-size: 13px; }
+  .hero { padding: 100px 20px 40px; }
+  .hero-headline { font-size: clamp(2rem, 11vw, 3.5rem); }
+  .hero-sub { font-size: 17px; }
+  .hero-cta { font-size: 14px; padding: 14px 28px; }
+  .hero-syntax { font-size: 11px; margin-top: 40px; }
+  .section { padding: 80px 20px; }
+  .section-title { font-size: clamp(2rem, 8vw, 3rem); }
+  .section-body { font-size: 17px; }
+  .eyebrow { font-size: 12px; }
+  .stats-strip { grid-template-columns: 1fr; }
+  .stat { border-right: none; border-bottom: 1px solid rgba(26,24,21,0.08); padding: 32px 20px; }
+  .stat:last-child { border-bottom: none; }
+  .stat-num { font-size: 2.5rem; }
+  .rails-strip { grid-template-columns: 1fr; }
+  .rail { border-right: none; border-bottom: 1px solid rgba(245,240,232,0.08); padding: 32px 20px; }
+  .rail:last-child { border-bottom: none; }
+  .num-item { grid-template-columns: 40px 1fr; gap: 16px; padding: 24px 0; }
+  .num-title { font-size: 19px; }
+  .num-desc { font-size: 14px; }
+  .why-strip { grid-template-columns: 1fr; }
+  .why { border-right: none; border-bottom: 1px solid rgba(26,24,21,0.08); padding: 32px 20px; }
+  .why:last-child { border-bottom: none; }
+  .calc-row { grid-template-columns: 1fr; gap: 32px; }
+  .calc-results { grid-template-columns: 1fr; }
+  .calc-result-num { font-size: 28px; }
+  .packages-strip { grid-template-columns: 1fr; }
+  .pkg { border-right: none; border-bottom: 1px solid rgba(26,24,21,0.08); padding: 32px 20px; }
+  .pkg:last-child { border-bottom: none; }
+  .pkg-name { font-size: 22px; }
+  .contact-email { font-size: 18px; }
+  .footer { padding: 20px; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .chat-panel { right: 12px; bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">acomm<span class="dot">.</span></div>
+  <div class="nav-links">
+    <a href="#shift">The shift</a>
+    <a href="#agentfirst">Agent-first</a>
+    <a href="#why">Why acomm</a>
+    <a href="#packages">Packages</a>
+    <a href="#contact" class="nav-cta">Get agent first</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">// agentic commerce for retail</div>
+  <h1 class="hero-headline">Customers are agent ready.<br><span class="italic">Are you</span><span class="dot">?</span></h1>
+  <p class="hero-sub">There are now two customers buying on the internet. Make sure you can serve both.</p>
+  <a href="#shift" class="hero-cta">Get agent first →</a>
+  <div class="hero-syntax">{ agent: "I need to buy a camera for urban photography" } → { agent_ready: true }</div>
+</section>
+
+<!-- THE SHIFT -->
+<section class="section" id="shift">
+  <div class="section-inner">
+    <div class="eyebrow">The shift is already <span style="font-weight:700">happening</span>.</div>
+    <h2 class="section-title">The second customer <span class="italic">arrives in a software update</span>.</h2>
+    <p class="section-body">Every platform shift was easy to dismiss at exactly the moment it was cheapest to act. Search in 2003. Mobile in 2010. E-commerce took twenty years because <strong>every previous shift was gated by human adoption</strong>. This one isn't. The agent changes for your customer in a software update. No new hardware. No new behaviour. No new trust to build.</p>
+
+    <div class="stats-strip">
+      <div class="stat">
+        <div class="stat-num">+393%</div>
+        <div class="stat-label">AI-referred traffic to US retail, year on year, Q1 2026. Source: Adobe Analytics, 1tn+ visits.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">42-54%</div>
+        <div class="stat-label">Better conversion than non-AI traffic, with +37% revenue per visit.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1 in 5</div>
+        <div class="stat-label">Digital commerce transactions via AI platforms by 2030. Source: Gartner.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENT FIRST -->
+<section class="section section-dark" id="agentfirst">
+  <div class="section-inner">
+    <div class="eyebrow">Being first is still <span style="font-weight:700">possible</span>.</div>
+    <h2 class="section-title">What does being agent-first <span class="italic">mean</span>?</h2>
+    <p class="section-body">Nobody in your category is agent-ready today. That's the opportunity. None of this is a replatform. All of it is buildable in quarters. The rails are already live.</p>
+
+    <div class="rails-strip">
+      <div class="rail">
+        <div class="rail-name">UCP</div>
+        <div class="rail-full">Universal Checkout Protocol</div>
+        <div class="rail-desc">Google's agent checkout standard. Walmart and Target are already signed. Lets an agent complete a purchase end to end on your store without a human in the loop.</div>
+        <div class="rail-status">● Live</div>
+      </div>
+      <div class="rail">
+        <div class="rail-name">ACP</div>
+        <div class="rail-full">Agent Commerce Protocol</div>
+        <div class="rail-desc">Stripe and OpenAI's Instant Checkout inside ChatGPT. An agent can browse, compare, and buy from a merchant in a single conversation. Already live for participating retailers.</div>
+        <div class="rail-status">● Live</div>
+      </div>
+      <div class="rail">
+        <div class="rail-name">FIDO</div>
+        <div class="rail-full">Agent Payment Mandates</div>
+        <div class="rail-desc">The FIDO Alliance standard for agent-to-merchant payment authorisation. Verifies that an agent has permission to pay on behalf of a human. The trust layer for autonomous commerce.</div>
+        <div class="rail-status">● Live</div>
+      </div>
+    </div>
+
+    <div class="numbered-list">
+      <div class="num-item">
+        <div class="num">01</div>
+        <div>
+          <div class="num-title">Readable catalogue</div>
+          <div class="num-desc">Structured product data an agent can parse: price, stock, sizes, identifiers, policies. Adobe finds only about half of retail content is machine-readable today.</div>
+        </div>
+      </div>
+      <div class="num-item">
+        <div class="num">02</div>
+        <div>
+          <div class="num-title">Live local inventory</div>
+          <div class="num-desc">Store-level stock visible to machines, so "get it by Friday near me" resolves to your stores, not a rival's.</div>
+        </div>
+      </div>
+      <div class="num-item">
+        <div class="num">03</div>
+        <div>
+          <div class="num-title">Agent checkout</div>
+          <div class="num-desc">An agent completes a purchase end to end via UCP and ACP, starting with one category.</div>
+        </div>
+      </div>
+      <div class="num-item">
+        <div class="num">04</div>
+        <div>
+          <div class="num-title">Instrumented funnel</div>
+          <div class="num-desc">Agent traffic, conversion and revenue reported monthly, next to paid and organic, against this model.</div>
+        </div>
+      </div>
+      <div class="num-item">
+        <div class="num">05</div>
+        <div>
+          <div class="num-title">Governance</div>
+          <div class="num-desc">A deliberate policy on which agents may read and transact, how mandates are verified, and who owns the number.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ACOMM -->
+<section class="section" id="why">
+  <div class="section-inner">
+    <div class="eyebrow">Not just another AI <span style="font-weight:700">consultancy</span>.</div>
+    <h2 class="section-title">Working with <span class="italic">acomm</span>.</h2>
+    <p class="section-body">You could try to do this alone. You could hire a generalist AI consultancy and pay them to learn on your dime. Or you could work with the people who are defining the category.</p>
+
+    <div class="why-strip">
+      <div class="why">
+        <div class="why-icon">// not a generalist</div>
+        <div class="why-title">We do one thing.</div>
+        <div class="why-body">Agent-readiness for retail. Not a twelve-month digital transformation. Not a chatbot for your support team. One proposition, done exceptionally. Fixed packages, fixed prices, provable outcomes.</div>
+      </div>
+      <div class="why">
+        <div class="why-icon">// not a platform</div>
+        <div class="why-title">We're protocol-agnostic.</div>
+        <div class="why-body">UCP, ACP, FIDO mandates. The rails will keep changing. We absorb that churn so you don't have to. Your agent-readiness survives the next platform shift because it was built on standards, not on a vendor.</div>
+      </div>
+      <div class="why">
+        <div class="why-icon">// not a forecast</div>
+        <div class="why-title">We sell measurements.</div>
+        <div class="why-body">The proof is already in your analytics. We segment your AI-referred traffic, benchmark your agent share of shelf against competitors, and populate the uplift model with your data. You get your number, not our pitch.</div>
+      </div>
+      <div class="why">
+        <div class="why-icon">// not your first rodeo</div>
+        <div class="why-title">We've seen this before.</div>
+        <div class="why-body">Search in 2003. Mobile in 2010. The teams that treated each shift as plumbing rather than marketing quietly took the shelf and held it for a decade. Acomm is built by people who have been on the right side of that bet before.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section section-dark" id="calc">
+  <div class="section-inner">
+    <div class="eyebrow">The opportunity, in <span style="font-weight:700">your numbers</span>.</div>
+    <h2 class="section-title">How much is <span class="italic">at stake</span>.</h2>
+    <p class="section-body">This is our uplift model running on your figures. The starting values are synthetic estimates. A 30-minute pull from your GA4 or Adobe replaces them with the real thing. <strong>Search sends you a shopper. The AI sends you a buyer.</strong></p>
+
+    <div class="calc-wrap">
+      <div class="calc-row">
+        <div class="calc-inputs">
+          <div class="calc-field"><label>Annual online revenue ($m)</label><input type="number" id="calcRev" value="650" min="1"></div>
+          <div class="calc-field"><label>AI-referred share of sessions today (%)</label><input type="number" id="calcShare" value="1.5" min="0" step="0.1"></div>
+          <div class="calc-field"><label>AI revenue-per-visit premium (%)</label><input type="number" id="calcPrem" value="37" min="0"></div>
+          <div class="calc-field"><label>Growth scenario</label><select id="calcScen">
+            <option value="cons">Conservative</option>
+            <option value="base" selected>Base</option>
+            <option value="agg">Aggressive</option>
+          </select></div>
+        </div>
+        <div class="calc-results">
+          <div class="calc-result"><div class="calc-result-num" id="rY3">$0m</div><div class="calc-result-label">captured from the AI channel in Year 3 if agent-ready, $m/yr</div></div>
+          <div class="calc-result"><div class="calc-result-num" id="rCost">$0m</div><div class="calc-result-label">cumulative cost of doing nothing, today through Year 3, $m</div></div>
+          <div class="calc-result"><div class="calc-result-num" id="rSwing">$0m</div><div class="calc-result-label">annual revenue swing when autonomous A2A arrives, $m/yr</div></div>
+          <div class="calc-result"><div class="calc-result-num" id="rGP">$0m</div><div class="calc-result-label">of that swing is gross profit at 38% margin, $m/yr</div></div>
+        </div>
+      </div>
+      <div class="calc-cta">
+        <a href="#contact" class="hero-cta">Get agent first →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="section" id="packages">
+  <div class="section-inner">
+    <div class="eyebrow">Measure. Ready. Transact. <span style="font-weight:700">Compound</span>.</div>
+    <h2 class="section-title">One ladder. Each rung <span class="italic">pays for the next</span>.</h2>
+    <p class="section-body">Land with Measure. Let its findings write the case for Ready. Let Ready's measured lift justify Transact. Let Transact make Compound non-optional. Four packages, fixed fees, provable outcomes.</p>
+
+    <div class="packages-strip">
+      <div class="pkg">
+        <div class="pkg-num">01</div>
+        <div class="pkg-name">Measure<span class="dot">.</span></div>
+        <div class="pkg-desc">Prove the opportunity in your own numbers. Segment your AI-referred traffic, benchmark your agent share of shelf, and populate the uplift model with your data.</div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-num">02</div>
+        <div class="pkg-name">Ready<span class="dot">.</span></div>
+        <div class="pkg-desc">Make yourself the most readable retailer in your category. Structured product data, catalogue enrichment, feed completeness, agent-readable inventory.</div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-num">03</div>
+        <div class="pkg-name">Transact<span class="dot">.</span></div>
+        <div class="pkg-desc">Be the first retailer in your set an agent can actually buy from. Agent checkout live on one category via UCP and ACP rails. Payment mandate handling and governance.</div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-num">04</div>
+        <div class="pkg-name">Compound<span class="dot">.</span></div>
+        <div class="pkg-desc">Hold the moat. Monthly share-of-shelf reporting, agent QA re-run every time the platforms change, catalogue operations, and protocol currency as the standards evolve.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section section-dark contact-section" id="contact">
+  <div class="section-inner">
+    <div class="eyebrow">Start <span style="font-weight:700">here</span>.</div>
+    <h2 class="section-title">Don't miss the <span class="italic">boat</span>.</h2>
+    <p class="section-body" style="margin: 0 auto 40px;">You can still build the moat. The rails are live. The customers are already using them. Get agent first.</p>
+    <a href="mailto:hello@acomm.ai" class="contact-email">hello@acomm.ai</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">acomm<span class="dot">.</span></div>
+  <div class="footer-url">acomm.ai</div>
+</footer>
+
+<!-- CHAT WIDGET -->
+<button class="chat-toggle" id="chatToggle" aria-label="Chat with acomm">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L2 22l5.71-.97C9 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.4 0-2.73-.36-3.87-1H8l-3 .75.75-3L5 15.87C4.36 14.73 4 13.4 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-header-title">acomm<span class="dot">.</span></div>
+    <button class="chat-close" id="chatClose">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">Hi! I'm the acomm copilot. Ask me anything about agent-readiness, the packages, or what being agent-first means for your store.</div>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" placeholder="Ask about being agent-first..." autocomplete="off">
+    <button class="chat-send" id="chatSend">
+      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fm=v=>"$"+Math.round(v).toLocaleString("en-US")+"m";
+const SCEN={cons:[0.75,0.50,0.30], base:[1.50,0.90,0.50], agg:[3.00,1.50,0.75]};
+const GROWTH=0.01, READY=0.90, NOTHING=0.40, MARGIN=0.38, A2A=0.20, M_E=1.8, M_N=0.25;
+function model(){
+  const rev0=+$("calcRev").value||0, share0=(+$("calcShare").value||0)/100,
+        prem=(+$("calcPrem").value||0)/100, g=SCEN[$("calcScen").value];
+  let share=share0, yrs=[];
+  for(let i=0;i<=3;i++){
+    if(i>0) share=share0*(g.reduce((a,b)=>a*(1+b),1)**(i/3));
+    const rev=rev0*Math.pow(1+GROWTH,i), ch=rev*share*(1+prem);
+    yrs.push({ch, ready:ch*READY, nothing:ch*NOTHING, gap:ch*(READY-NOTHING)});
+  }
+  const cost=yrs.reduce((a,y)=>a+y.gap,0);
+  const base4=rev0*Math.pow(1+GROWTH,4), swing=base4*A2A*(M_E-M_N);
+  return {yrs, cost, swing, gp:swing*MARGIN};
+}
+function recalc(){
+  const m=model();
+  $("rY3").textContent=fm(m.yrs[3].ready);
+  $("rCost").textContent=fm(m.cost);
+  $("rSwing").textContent=fm(m.swing);
+  $("rGP").textContent=fm(m.gp);
+}
+["calcRev","calcShare","calcPrem","calcScen"].forEach(id=>$(id).addEventListener("input",recalc));
+recalc();
+
+$('chatToggle').addEventListener('click',()=>{ $('chatPanel').classList.toggle('open'); $('chatInput').focus(); });
+$('chatClose').addEventListener('click',()=>$('chatPanel').classList.remove('open'));
+
+const acommKnowledge=[
+  {keywords:['what','acomm','about','who'],reply:"Acomm gets retailers agent-ready before their competitors are. We're a focused, productised service that takes a retailer from 'aware' to 'agent-first' across four clear packages. Think of it as SEO for the second customer of the internet."},
+  {keywords:['ucp','universal checkout'],reply:"UCP is Google's Universal Checkout Protocol. It lets an AI agent complete a purchase end to end on your store without a human in the loop. Walmart and Target are already signed up."},
+  {keywords:['acp','agent commerce','stripe','openai','instant checkout'],reply:"ACP is the Agent Commerce Protocol. Stripe and OpenAI's Instant Checkout inside ChatGPT. An agent can browse, compare, and buy from your store in a single conversation."},
+  {keywords:['cost','price','how much','fee','charge'],reply:"We don't publish prices on the site because every retailer's situation is different. The four packages are Measure, Ready, Transact, and Compound. Each one funds the next. Email hello@acomm.ai for a quote."},
+  {keywords:['measure','package','first package'],reply:"Measure is the first package. We prove the opportunity in your own numbers. Segment your AI-referred traffic, benchmark your agent share of shelf, and populate the uplift model with your data."},
+  {keywords:['ready','second package'],reply:"Ready is the second package. We make you the most readable retailer in your category. Structured product data, catalogue enrichment, feed completeness, agent-readable inventory."},
+  {keywords:['transact','third package','checkout'],reply:"Transact is the third package. We make you the first retailer in your set an agent can actually buy from. Agent checkout live on one category via UCP and ACP rails."},
+  {keywords:['compound','fourth package','retainer','moat'],reply:"Compound is the ongoing retainer. We hold the moat. Monthly share-of-shelf reporting, agent QA re-run every time the AI platforms change, catalogue operations, and protocol currency."},
+  {keywords:['why','why acomm','specialist','vs','versus'],reply:"We do one thing. Agent-readiness for retail. Not a twelve-month transformation, not a chatbot, not a generalist AI consultancy. Fixed packages, fixed prices, provable outcomes."},
+  {keywords:['agent-first','agent ready','what does it mean','mean'],reply:"Being agent-first means five things: 1) A readable catalogue an agent can parse. 2) Live local inventory visible to machines. 3) Agent checkout via UCP or ACP. 4) An instrumented funnel that reports agent traffic and revenue. 5) Governance. Nobody in your category is agent-ready today. That's the opportunity."},
+  {keywords:['hello','hi','hey','start'],reply:"Hi! I'm the acomm copilot. Ask me about being agent-first, the four packages, the UCP and ACP rails, or what it all means for your store."},
+  {keywords:['contact','email','get in touch','reach'],reply:"Email us at hello@acomm.ai. We'll get back to you within 24 hours."},
+  {keywords:['don','t','miss','boat','moat'],reply:"Don't miss the boat. You can still build the moat. You can't be early anymore. But you can still be first in your category, and first compounds, because agents remember."},
+];
+
+function findReply(text){
+  const lower=text.toLowerCase();
+  let best=null, bestScore=0;
+  for(const item of acommKnowledge){
+    let score=0;
+    for(const kw of item.keywords){ if(lower.includes(kw)) score++; }
+    if(score>bestScore){bestScore=score; best=item;}
+  }
+  if(best && bestScore>0) return best.reply;
+  return "I'm the acomm copilot. I can tell you about being agent-first, the four packages (Measure, Ready, Transact, Compound), the UCP and ACP rails, or why working with an agentic commerce specialist matters. What would you like to know?";
+}
+
+function sendChat(){
+  const text=$('chatInput').value.trim();
+  if(!text) return;
+  const msgs=$('chatMessages');
+  msgs.innerHTML+=`<div class="chat-msg user">${text.replace(/</g,'&lt;')}</div>`;
+  $('chatInput').value='';
+  msgs.innerHTML+=`<div class="chat-typing" id="typingDot">acomm is thinking...</div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    const t=$('typingDot'); if(t) t.remove();
+    const reply=findReply(text);
+    msgs.innerHTML+=`<div class="chat-msg bot">${reply}</div>`;
+    msgs.scrollTop=msgs.scrollHeight;
+  }, 600+Math.random()*800);
+}
+$('chatSend').addEventListener('click',sendChat);
+$('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat();});
+</script>
+</body>
+</html>
