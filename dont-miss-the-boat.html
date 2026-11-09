@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Don't miss the boat · ACOMM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#2a282a; --blush:#f2cfe8; --white:#ffffff; --paper:#e9e7e8;
+    --muted-on-charcoal:#b5a4b0; --muted-on-blush:#4f4a4e; --muted-on-paper:#6e676c;
+    --line-on-charcoal:#575257; --line-on-charcoal-band:#3a373a;
+    --line-on-blush:#b9a3b3; --line-on-paper:#c9c6c7;
+    --accent:#2a282a;
+    --font:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+    --container:1080px; --gutter:28px;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--charcoal);color:var(--blush);font-family:var(--font);font-size:17px;line-height:1.6}
+  a{color:inherit}
+  .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+
+  /* section themes */
+  .dark{--ground:var(--charcoal);--ink:var(--blush);--muted:var(--muted-on-charcoal);--line:var(--line-on-charcoal-band);background:var(--charcoal);color:var(--blush)}
+  .light{--ground:var(--blush);--ink:var(--charcoal);--muted:var(--muted-on-blush);--line:var(--line-on-blush);background:var(--blush);color:var(--charcoal);color-scheme:light}
+  .paper{--ground:var(--paper);--ink:var(--charcoal);--muted:var(--muted-on-paper);--line:var(--line-on-paper);background:var(--paper);color:var(--charcoal);color-scheme:light}
+
+  /* top bar */
+  .bar{position:sticky;top:0;z-index:50;background:var(--charcoal);border-bottom:1px solid var(--line-on-charcoal)}
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .wordmark{font-weight:700;font-size:18px;letter-spacing:-.02em;text-transform:uppercase;color:var(--blush)}
+  .wordmark .arrow{margin-right:4px}
+  .bar-meta{font-size:13px;font-weight:500;letter-spacing:-.01em;text-transform:uppercase;color:var(--muted-on-charcoal)}
+
+  /* hero */
+  .hero{padding:96px 0 72px;background:var(--charcoal)}
+  .kicker{font-size:14px;font-weight:500;letter-spacing:-.01em;text-transform:uppercase;color:var(--blush)}
+  .kicker .arrow{margin-right:4px}
+  h1{font-weight:700;font-size:clamp(44px,7vw,84px);line-height:.98;letter-spacing:-.03em;margin:18px 0 10px;text-wrap:balance}
+  h1 .moat{color:var(--white)}
+  .sub{font-size:20px;color:var(--muted-on-charcoal);max-width:34em;margin-top:14px}
+  .sub b{color:var(--blush);font-weight:600}
+
+  /* sections */
+  section{padding:72px 0}
+  h2{font-weight:700;font-size:clamp(28px,3.6vw,40px);letter-spacing:-.02em;line-height:1.08;text-wrap:balance;margin-bottom:14px}
+  .lede{color:var(--muted);max-width:38em}
+  .lede b{color:var(--ink);font-weight:600}
+  .label-tag{font-size:14px;font-weight:500;letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);display:inline-block;margin-bottom:14px}
+  .label-tag .arrow{margin-right:4px}
+
+  /* eras */
+  .era{display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:center;padding:40px 0}
+  .era+.era{border-top:1px solid var(--line)}
+  .era-year{font-weight:700;font-size:clamp(64px,9vw,120px);letter-spacing:-.04em;line-height:1;color:var(--line)}
+  .era.now .era-year{color:var(--ink)}
+  .era h3{font-weight:700;font-size:22px;margin:6px 0 8px}
+  .era p{color:var(--muted);font-size:15.5px;max-width:30em}
+  .era p b{color:var(--ink);font-weight:600}
+  .chart-card{background:var(--white);border:1px solid var(--line);padding:18px 18px 10px}
+  .chart-title{font-size:12px;color:var(--muted);margin-bottom:8px}
+  .chart-src{font-size:10.5px;color:var(--muted);margin-top:6px}
+  svg text{font-family:var(--font);font-size:10px;fill:var(--muted)}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+  .stat{background:var(--white);border:1px solid var(--line);padding:20px}
+  .stat .n{font-weight:700;font-size:40px;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+  .stat .l{font-size:13.5px;color:var(--muted);margin-top:4px}
+
+  /* moat */
+  .moatgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+  .moatgrid .m{border:1px solid var(--line);padding:18px}
+  .moatgrid .m h4{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--blush)}
+  .moatgrid .m p{font-size:13.5px;color:var(--muted-on-charcoal)}
+
+  /* calculator */
+  .calc{display:grid;grid-template-columns:380px 1fr;gap:40px;margin-top:34px;align-items:start}
+  .panel{background:var(--white);border:1px solid var(--line);padding:22px}
+  .panel h4{font-size:12px;font-weight:500;letter-spacing:-.01em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+  .field input,.field select{width:100%;padding:10px 12px;border:1px solid var(--line-on-blush);background:var(--white);color:var(--charcoal);font-family:var(--font);font-size:15px}
+  .field input:focus,.field select:focus{outline:2px solid var(--charcoal);outline-offset:1px}
+  .hint{font-size:11.5px;color:var(--muted);margin-top:5px}
+  .pull-quote{font-weight:700;font-size:clamp(21px,2.8vw,30px);line-height:1.28;letter-spacing:-.02em;max-width:19em;margin:20px 0 10px;text-wrap:balance}
+  .pull-quote .hi{color:var(--charcoal)}
+
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .kpi{border:1px solid var(--line);padding:18px;background:var(--white)}
+  .kpi .n{font-weight:700;font-size:34px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .kpi.acc .n{color:var(--charcoal)}
+  .kpi.loss .n{color:var(--muted)}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+  #barchart{margin-top:18px}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--muted);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+
+  /* GCP cost */
+  .gcp-note{font-size:11.5px;color:var(--muted);margin-top:14px}
+
+  /* ROI */
+  .roigrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+  .rbig .n{font-weight:700;font-size:clamp(30px,4vw,48px);letter-spacing:-.02em;color:var(--blush);line-height:1}
+  .rbig .l{font-size:13px;color:var(--muted-on-charcoal);margin-top:8px;max-width:16em}
+  .roictl{margin-top:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .roictl label{font-size:12px;color:var(--muted-on-charcoal)}
+  .roictl input{background:var(--line-on-charcoal-band);border:1px solid var(--line-on-charcoal);color:var(--blush);padding:8px 11px;font-family:var(--font);font-size:14px;width:160px}
+  .roictl .note{font-size:11.5px;color:var(--muted-on-charcoal);max-width:34em}
+
+  /* readiness */
+  .ready-list{margin-top:28px;border-top:1px solid var(--line)}
+  .rrow{display:grid;grid-template-columns:44px 220px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .rnum{font-weight:700;font-size:20px;color:var(--charcoal)}
+  .rname{font-weight:600;font-size:15.5px}
+  .rwhat{color:var(--muted);font-size:14px}
+
+  /* packages */
+  .packs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px}
+  .pack{border:1px solid var(--line);padding:20px;background:var(--white);display:flex;flex-direction:column}
+  .pack.flag{background:var(--charcoal);color:var(--blush);border-color:var(--charcoal)}
+  .pack .pnum{font-size:12px;font-weight:600;color:var(--charcoal)}
+  .pack.flag .pnum{color:var(--blush)}
+  .pack h4{font-weight:700;font-size:19px;margin:6px 0 2px}
+  .pack .dur{font-size:11.5px;color:var(--muted)}
+  .pack.flag .dur{color:var(--muted-on-charcoal)}
+  .pack ul{list-style:none;margin:14px 0;flex:1}
+  .pack li{font-size:13px;color:var(--muted);padding:5px 0 5px 14px;position:relative}
+  .pack.flag li{color:var(--muted-on-charcoal)}
+  .pack li::before{content:"";position:absolute;left:0;top:12px;width:6px;height:2px;background:var(--charcoal)}
+  .pack.flag li::before{background:var(--blush)}
+  .pack .price{font-size:14px;font-weight:600}
+
+  /* buttons (ACOMM style) */
+  .btn{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:14px 20px;border:1.5px solid var(--ink);border-radius:0;background:var(--ink);color:var(--ground);font-family:var(--font);font-weight:600;font-size:14px;text-transform:uppercase;cursor:pointer;text-decoration:none}
+  .btn .arrow{transition:transform .15s}
+  .btn:hover .arrow{transform:translate(2px,2px)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .pack .btn{margin-top:14px;width:100%;justify-content:center}
+
+  /* CTA */
+  .cta{text-align:center}
+  .cta h2{font-size:clamp(30px,4.4vw,48px)}
+  .cta .lede{margin:0 auto 26px;max-width:36em}
+  .cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+  /* generated sheets */
+  .sheetzone{margin-top:36px;display:none}
+  .sheetzone.open{display:block}
+  .sheet{background:var(--white);border:1px solid var(--line-on-blush);max-width:820px;margin:0 auto;padding:44px 48px;box-shadow:0 8px 30px rgba(0,0,0,.07);color:var(--charcoal)}
+  .sheet h3{font-weight:700;font-size:26px;margin-bottom:2px}
+  .sheet .meta{font-size:12px;color:var(--muted-on-paper);margin-bottom:22px}
+  .sheet h5{font-size:12px;font-weight:600;letter-spacing:-.01em;text-transform:uppercase;color:var(--charcoal);margin:20px 0 6px}
+  .sheet p,.sheet li{font-size:14.5px}
+  .sheet ul{margin-left:18px}
+  .sheet table{width:100%;border-collapse:collapse;margin:8px 0}
+  .sheet th,.sheet td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line-on-paper);font-size:13.5px}
+  .sheet th{font-size:11.5px;color:var(--muted-on-paper)}
+  .sheet td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .sheet th.num{text-align:right}
+  .sheet .sig{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:34px}
+  .sheet .sig div{border-top:1px solid var(--charcoal);padding-top:6px;font-size:12.5px;color:var(--muted-on-paper)}
+  .sheet-actions{display:flex;gap:10px;justify-content:center;margin:16px 0}
+
+  /* footer */
+  footer{padding:36px 0;background:var(--charcoal);border-top:1px solid var(--line-on-charcoal-band);color:var(--muted-on-charcoal);font-size:12.5px}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  footer b{color:var(--blush);font-weight:600}
+
+  /* responsive */
+  @media(max-width:900px){
+    .era{grid-template-columns:1fr}
+    .calc{grid-template-columns:1fr}
+    .stats,.moatgrid,.roigrid{grid-template-columns:1fr}
+    .packs{grid-template-columns:repeat(2,1fr)}
+    .rrow{grid-template-columns:36px 1fr;grid-template-rows:auto auto}
+    .rwhat{grid-column:2}
+    .roictl{flex-direction:column;align-items:flex-start}
+  }
+  @media(max-width:560px){.packs{grid-template-columns:1fr}}
+
+  @media print{
+    body *{visibility:hidden}
+    .sheetzone.open,.sheetzone.open *{visibility:visible}
+    .sheetzone.open{position:absolute;top:0;left:0;width:100%}
+    .sheet{border:0;box-shadow:none;max-width:none}
+    .sheet-actions{display:none}
+  }
+  @media(prefers-reduced-motion:no-preference){
+    .era-year{transition:color .5s}
+    .kpi .n{transition:opacity .25s}
+    .btn .arrow{transition:transform .15s}
+  }
+</style>
+</head>
+<body>
+
+<!-- top bar -->
+<div class="bar"><div class="wrap">
+  <div class="wordmark"><span class="arrow">↘︎</span>ACOMM</div>
+  <div class="bar-meta">Agentic commerce venture studio</div>
+</div></div>
+
+<!-- hero -->
+<div class="hero"><div class="wrap">
+  <div class="kicker"><span class="arrow">↘︎</span>The second customer of the internet</div>
+  <h1>Don't miss the boat.<br><span class="moat">You can still build the moat.</span></h1>
+  <p class="sub">AI agents are already shopping on behalf of <b>your customers</b>. This page holds the whole argument: the history, the live data, <b>your number</b>, and exactly what to do next.</p>
+</div></div>
+
+<!-- eras -->
+<section class="paper"><div class="wrap">
+  <div class="label-tag"><span class="arrow">↘︎</span>The argument</div>
+  <h2>You've seen this movie twice before.</h2>
+  <p class="lede">Hand on heart: were you all in on search in 2003? On mobile in 2010? Almost nobody was. Every platform shift so far was easy to dismiss at exactly the moment it was cheapest to act.</p>
+
+  <div class="era">
+    <div>
+      <div class="era-year">2003</div>
+      <h3>Search looked optional</h3>
+      <p>Google's ad revenue went from <b>$0.4bn to $29bn in eight years</b>. The retailers who treated ranking as plumbing kept the digital shelf for a decade. Most boards funded SEO after the land grab.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Google advertising revenue, $bn</div>
+      <svg viewBox="0 0 520 170" role="img" aria-label="Google ad revenue 2002 to 2010 rising from 0.4 to 29 billion dollars">
+        <g id="c2003"></g>
+      </svg>
+      <div class="chart-src">Source: Alphabet/Google reported revenues</div>
+    </div>
+  </div>
+
+  <div class="era">
+    <div>
+      <div class="era-year">2010</div>
+      <h3>Mobile looked niche</h3>
+      <p>3% of web traffic in 2010; <b>more than half of everything</b> ten years later. The window to be early lasted about three years, and most boards spent it commissioning an app as a PR exercise.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Mobile share of global web traffic, %</div>
+      <svg viewBox="0 0 520 170" role="img" aria-label="Mobile share of web traffic rising from 3 percent in 2010 to 56 percent in 2020">
+        <polyline id="c2010" fill="none" stroke="#2a282a" stroke-width="2.5"></polyline>
+        <g id="c2010t"></g>
+      </svg>
+      <div class="chart-src">Source: StatCounter</div>
+    </div>
+  </div>
+
+  <div class="era">
+    <div>
+      <div class="era-year">2005</div>
+      <h3>E-commerce was slow for a reason</h3>
+      <p>Twenty years to reach a sixth of US retail, because customers had to change: habits, trust, devices. <b>Every previous shift was gated by human adoption.</b> Hold that thought.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">US e-commerce share of retail sales, %</div>
+      <svg viewBox="0 0 520 170" role="img" aria-label="US ecommerce share of retail rising from 2.4 percent in 2005 to about 16 percent in 2025">
+        <polyline id="c2005" fill="none" stroke="#2a282a" stroke-width="2.5"></polyline>
+        <g id="c2005t"></g>
+      </svg>
+      <div class="chart-src">Source: US Census Bureau</div>
+    </div>
+  </div>
+
+  <div class="era now">
+    <div>
+      <div class="era-year">NOW</div>
+      <h3>Agents. Not a forecast, a measurement</h3>
+      <p>This shift isn't gated by your customers. They change nothing; <b>their agent changes for them, in a software update</b>. The traffic is already in your analytics, and it's your best traffic.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">AI-referred visits to US retail, indexed (Oct 2024 = 1)</div>
+      <svg viewBox="0 0 520 170" role="img" aria-label="AI referred retail traffic rising 14x from October 2024 to May 2026">
+        <polyline id="cnow" fill="none" stroke-width="3"></polyline>
+        <g id="cnowt"></g>
+      </svg>
+      <div class="chart-src">Source: Adobe Analytics, 1tn+ US retail visits</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="n">+393%</div><div class="l">AI-referred traffic to US retail, year on year, Q1 2026 (Adobe)</div></div>
+    <div class="stat"><div class="n">42–54%</div><div class="l">better conversion than non-AI traffic, with +37% revenue per visit</div></div>
+    <div class="stat"><div class="n">1 in 5</div><div class="l">digital commerce transactions via AI platforms by 2030 (Gartner)</div></div>
+  </div>
+</div></section>
+
+<!-- moat -->
+<section class="dark"><div class="wrap">
+  <div class="label-tag"><span class="arrow">↘︎</span>The moat</div>
+  <h2>Agents don't forget.</h2>
+  <p class="lede">The rails are live: Instant Checkout inside ChatGPT, Google's UCP with Walmart and Target signed, payment mandates at the FIDO Alliance. You can't be early anymore. <b>You can still be first</b>, and first compounds, because agents keep score.</p>
+  <div class="moatgrid">
+    <div class="m"><h4>Trust records</h4><p>Agents track whose data was accurate, whose orders completed, whose returns were honoured. Ratings are earned transaction by transaction, and late movers start at zero.</p></div>
+    <div class="m"><h4>Learned defaults</h4><p>After fifty clean purchases you're the agent's default endpoint. A challenger has to be better, not equal, to displace you.</p></div>
+    <div class="m"><h4>Model memory</h4><p>Assistants are trained on the web as it is now. Readable today means baked into the models that steer tomorrow's recommendations.</p></div>
+  </div>
+</div></section>
+
+<!-- calculator -->
+<section class="light"><div class="wrap">
+  <div class="label-tag"><span class="arrow">↘︎</span>Your number</div>
+  <h2>Your number, live.</h2>
+  <p class="lede">This is our uplift model running on <b>your</b> figures. The starting values are illustrative estimates; a 30-minute pull from your GA4 or Adobe replaces them with the real thing.</p>
+  <p class="pull-quote">Search sends you a shopper. <span class="hi">The AI sends you a buyer.</span> That's why the AI visit is worth more, and that's the whole game.</p>
+  <div class="calc">
+    <div class="panel">
+      <h4>Inputs</h4>
+      <div class="field"><label for="inRev">Annual online revenue ($m)</label><input id="inRev" type="number" min="1" step="10" value="650"></div>
+      <div class="field"><label for="inShare">AI-referred share of sessions today (%)</label><input id="inShare" type="number" min="0" step="0.1" value="1.5"><div class="hint">Sessions from chatgpt.com, perplexity.ai, gemini.google.com, copilot.microsoft.com</div></div>
+      <div class="field"><label for="inPrem">AI revenue-per-visit premium (%)</label><input id="inPrem" type="number" min="0" step="1" value="37"><div class="hint">Adobe-measured default; replace with yours</div></div>
+      <div class="field"><label for="inScen">Growth scenario</label><select id="inScen">
+        <option value="cons">Conservative (+75% / +50% / +30%)</option>
+        <option value="base" selected>Base (+150% / +90% / +50%)</option>
+        <option value="agg">Aggressive (+300% / +150% / +75%)</option>
+      </select><div class="hint">Adobe measured +393% YoY in Q1 2026; every scenario assumes deceleration</div></div>
+    </div>
+    <div>
+      <div class="kpis">
+        <div class="kpi acc"><div class="n" id="kY3"></div><div class="l">captured from the AI channel in Year 3 if agent-ready, $m/yr</div></div>
+        <div class="kpi loss"><div class="n" id="kCost"></div><div class="l">cumulative cost of doing nothing, today through Year 3, $m</div></div>
+        <div class="kpi acc"><div class="n" id="kSwing"></div><div class="l">annual revenue swing when autonomous A2A arrives (~Year 4–5), $m/yr</div></div>
+        <div class="kpi loss"><div class="n" id="kGP"></div><div class="l">of that swing is gross profit at a 38% retail margin, $m/yr</div></div>
+      </div>
+      <svg id="barchart" viewBox="0 0 640 240" role="img" aria-label="Revenue captured per year, agent ready versus doing nothing"></svg>
+      <div class="legend"><div><i id="lgA"></i>Agent-ready</div><div><i style="background:#b9a3b3"></i>Doing nothing</div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- GCP cost -->
+<section class="paper"><div class="wrap">
+  <div class="label-tag"><span class="arrow">↘︎</span>Cost to run</div>
+  <h2>What it costs to run.</h2>
+  <p class="lede">The case above is the upside. This is the other half a CFO needs: your total cost of ownership to run the agentic commerce stack. ACOMM runs on Google Cloud; the figures below are list-price estimates, refined against your committed-use rates.</p>
+  <div class="calc">
+    <div class="panel">
+      <h4>Workload</h4>
+      <div class="field"><label for="tScale">Scale</label><select id="tScale">
+        <option value="mid">Mid-market</option>
+        <option value="ent" selected>Enterprise</option>
+      </select></div>
+      <div class="field"><label for="tSku">Catalogue size (SKUs)</label><input id="tSku" type="number" min="1000" step="10000" value="1000000"></div>
+      <div class="field"><label for="tCalls">Agent API calls per month</label><input id="tCalls" type="number" min="0" step="500000" value="15000000"><div class="hint">Catalogue, inventory and order calls once agents are live</div></div>
+    </div>
+    <div>
+      <div class="kpis">
+        <div class="kpi acc"><div class="n" id="tRun"></div><div class="l">annual run cost at steady state — your TCO, per year</div></div>
+        <div class="kpi loss"><div class="n" id="tBuild"></div><div class="l">one-off build cost, year one</div></div>
+        <div class="kpi acc"><div class="n" id="t3yr"></div><div class="l">3-year total cost of ownership</div></div>
+        <div class="kpi loss"><div class="n" id="tRatio"></div><div class="l">run cost as a share of the revenue you capture in Year 3</div></div>
+      </div>
+      <div class="gcp-note">List-price estimate, refined against your committed-use rates. Consumption can be part-funded via Google partner programs.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ROI -->
+<section class="dark"><div class="wrap">
+  <div class="label-tag"><span class="arrow">↘︎</span>The bottom line</div>
+  <h2>The bottom line.</h2>
+  <p class="lede">One number for the board: the gross profit you protect by acting, against everything it costs to build and run, <b>ACOMM services and Google Cloud combined</b>.</p>
+  <div class="roigrid">
+    <div class="rbig"><div class="n" id="rRoi"></div><div class="l">3-year return on investment</div></div>
+    <div class="rbig"><div class="n" id="rNet"></div><div class="l">net value over three years, after every cost</div></div>
+    <div class="rbig"><div class="n" id="rInvest"></div><div class="l">total 3-year cost: ACOMM + Google Cloud</div></div>
+    <div class="rbig"><div class="n" id="rPay"></div><div class="l">payback at the Year-3 run-rate</div></div>
+  </div>
+  <div class="roictl">
+    <label for="rSvc">ACOMM services, 3 years ($)</label>
+    <input id="rSvc" type="number" min="0" step="50000" value="2535000">
+    <span class="note">Google Cloud cost pulls from the calculator above. Return is gross profit at a 38% margin on the revenue you protect by being agent-ready rather than doing nothing.</span>
+  </div>
+</div></section>
+
+<!-- readiness -->
+<section class="light"><div class="wrap">
+  <div class="label-tag"><span class="arrow">↘︎</span>Readiness</div>
+  <h2>What "ready" means.</h2>
+  <p class="lede">Nobody in your category is agent-ready today. That's the opportunity. None of this is a replatform; all of it is buildable in quarters.</p>
+  <div class="ready-list">
+    <div class="rrow"><div class="rnum">↘︎ 01</div><div class="rname">Readable catalogue</div><div class="rwhat">Structured product data an agent can parse: price, stock, sizes, identifiers, policies. Adobe finds only about half of retail content is machine-readable today.</div></div>
+    <div class="rrow"><div class="rnum">↘︎ 02</div><div class="rname">Live local inventory</div><div class="rwhat">Store-level stock visible to machines, so "get it by Friday near me" resolves to your stores, not a rival's.</div></div>
+    <div class="rrow"><div class="rnum">↘︎ 03</div><div class="rname">Agent checkout</div><div class="rwhat">An agent completes a purchase end to end on the new rails (UCP / ACP), starting with one category.</div></div>
+    <div class="rrow"><div class="rnum">↘︎ 04</div><div class="rname">Instrumented funnel</div><div class="rwhat">Agent traffic, conversion and revenue reported monthly, next to paid and organic, against this model.</div></div>
+    <div class="rrow"><div class="rnum">↘︎ 05</div><div class="rname">Governance</div><div class="rwhat">A deliberate policy on which agents may read and transact, how mandates are verified, and who owns the number.</div></div>
+  </div>
+</div></section>
+
+<!-- packages -->
+<section class="paper"><div class="wrap">
+  <div class="label-tag"><span class="arrow">↘︎</span>Four ways in</div>
+  <h2>Four ways in. Each one funds the next.</h2>
+  <div class="packs">
+    <div class="pack"><div class="pnum">↘︎ 01 · 30 days</div><h4>MEASURE</h4><div class="dur">Fixed fee · from $95k</div>
+      <ul><li>Agent share of shelf vs your competitive set</li><li>AI-referral baseline from your own analytics</li><li>This model, populated with your data</li></ul>
+      <div class="price">The number your board tracks from now on.</div>
+      <button class="btn ghost" onclick="makeSOW('MEASURE')">Generate SOW <span class="arrow">↘︎</span></button></div>
+    <div class="pack"><div class="pnum">↘︎ 02 · 90 days</div><h4>READY</h4><div class="dur">Fixed fee · from $350k</div>
+      <ul><li>Catalogue enriched to agent-legible quality</li><li>Store inventory exposed to machines</li><li>Agent QA: find and fix where agents fail</li></ul>
+      <div class="price">The most readable retailer in your category.</div>
+      <button class="btn ghost" onclick="makeSOW('READY')">Generate SOW <span class="arrow">↘︎</span></button></div>
+    <div class="pack"><div class="pnum">↘︎ 03 · 2 quarters</div><h4>TRANSACT</h4><div class="dur">Fixed + milestone · from $650k</div>
+      <ul><li>Agent checkout live on one category</li><li>Agent API gateway, mandates, fraud rules</li><li>Governance set and owned</li></ul>
+      <div class="price">The first retailer an agent can buy from.</div>
+      <button class="btn ghost" onclick="makeSOW('TRANSACT')">Generate SOW <span class="arrow">↘︎</span></button></div>
+    <div class="pack flag"><div class="pnum">↘︎ 04 · ongoing</div><h4>COMPOUND</h4><div class="dur">Retainer · from $40k/mo</div>
+      <ul><li>Monthly share-of-shelf reporting</li><li>Agent QA re-run on every platform change</li><li>Protocol currency: UCP, ACP, AP2</li></ul>
+      <div class="price">The moat, maintained.</div>
+      <button class="btn ghost" onclick="makeSOW('COMPOUND')">Generate SOW <span class="arrow">↘︎</span></button></div>
+  </div>
+</div></section>
+
+<!-- CTA -->
+<section class="dark"><div class="wrap">
+  <div class="label-tag"><span class="arrow">↘︎</span>Next</div>
+  <h2 style="text-align:center">Take this to your board.</h2>
+  <p class="lede" style="margin:0 auto 26px;max-width:36em;text-align:center">One page, your numbers, generated from the model above. Or go straight to a statement of work and start the 30-day measurement.</p>
+  <div class="cta-btns">
+    <button class="btn" onclick="makeBC()">Generate the business case <span class="arrow">↘︎</span></button>
+    <button class="btn ghost" onclick="makeSOW('MEASURE')">Generate the SOW <span class="arrow">↘︎</span></button>
+  </div>
+  <div class="sheetzone" id="sheetzone">
+    <div class="sheet-actions">
+      <button class="btn" onclick="window.print()">Print / save as PDF <span class="arrow">↘︎</span></button>
+      <button class="btn ghost" onclick="closeSheet()">Close</button>
+    </div>
+    <div class="sheet" id="sheet"></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div><b>ACOMM Ventures, Inc.</b> · Agentic commerce venture studio.</div>
+  <div>Sources: Adobe Analytics (Q1–Q2 2026, 1tn+ US retail visits); US Census Bureau; StatCounter; Gartner; Stripe/OpenAI ACP; Google UCP (NRF 2026). Cost-to-run figures are list-price estimates, refined with Google Cloud Customer Engineers. Figures marked illustrative are directional and replaced by the client's own analytics in Package 01.</div>
+</div></footer>
+
+<script>
+  const SCEN = {cons:[0.75,0.50,0.30], base:[1.50,0.90,0.50], agg:[3.00,1.50,0.75]};
+  const GROWTH=0.01, READY=0.90, NOTHING=0.40, MARGIN=0.38, A2A_SHARE=0.20, M_EARLY=1.8, M_NONE=0.25;
+  const $=id=>document.getElementById(id);
+  const fm=v=>"$"+Math.round(v).toLocaleString("en-US")+"m";
+  const fmB=v=>v>=1e6?"$"+(v/1e6).toFixed(1)+"m":"$"+Math.round(v/1000)+"k";
+
+  function model(){
+    const rev0=+$("inRev").value||0, share0=(+$("inShare").value||0)/100,
+          prem=(+$("inPrem").value||0)/100, g=SCEN[$("inScen").value];
+    const yrs=[]; let share=share0;
+    for(let i=0;i<=3;i++){
+      if(i>0) share=share*(1+g[i-1]);
+      const rev=rev0*Math.pow(1+GROWTH,i);
+      const ch=rev*share*(1+prem);
+      yrs.push({ch, ready:ch*READY, nothing:ch*NOTHING, gap:ch*(READY-NOTHING)});
+    }
+    const cost=yrs.reduce((a,y)=>a+y.gap,0);
+    const base2030=rev0*Math.pow(1+GROWTH,4);
+    const swing=base2030*A2A_SHARE*(M_EARLY-M_NONE);
+    return {yrs, cost, swing, gp:swing*MARGIN};
+  }
+
+  function drawBars(m){
+    const svg=$("barchart"), acc="#2a282a";
+    const data=m.yrs.slice(1); const max=Math.max(...data.map(d=>d.ready))*1.15||1;
+    const W=640,H=240,pad=34,bw=52,groupW=(W-pad*2)/3;
+    let s="";
+    data.forEach((d,i)=>{
+      const cx=pad+groupW*i+groupW/2;
+      const h1=(d.ready/max)*(H-70), h2=(d.nothing/max)*(H-70);
+      s+=`<rect x="${cx-bw-4}" y="${H-40-h1}" width="${bw}" height="${h1}" fill="${acc}" rx="3"></rect>`;
+      s+=`<rect x="${cx+4}" y="${H-40-h2}" width="${bw}" height="${h2}" fill="#b9a3b3" rx="3"></rect>`;
+      s+=`<text x="${cx-bw-4+bw/2}" y="${H-46-h1}" text-anchor="middle" style="font-weight:600;fill:#2a282a">${fm(d.ready)}</text>`;
+      s+=`<text x="${cx+4+bw/2}" y="${H-46-h2}" text-anchor="middle" style="fill:#4f4a4e">${fm(d.nothing)}</text>`;
+      s+=`<text x="${cx}" y="${H-18}" text-anchor="middle" style="font-size:12px;fill:#2a282a;font-weight:600">Year ${i+1}</text>`;
+    });
+    s+=`<line x1="${pad-10}" y1="${H-40}" x2="${W-pad+10}" y2="${H-40}" stroke="#b9a3b3"></line>`;
+    svg.innerHTML=s;
+    $("lgA").style.background=acc;
+  }
+
+  function recalc(){
+    const m=model();
+    $("kY3").textContent=fm(m.yrs[3].ready);
+    $("kCost").textContent=fm(m.cost);
+    $("kSwing").textContent=fm(m.swing);
+    $("kGP").textContent=fm(m.gp);
+    drawBars(m);
+    tco();
+  }
+
+  // TCO
+  const TCO_PRICE={vertex:2.00, bqStore:0.02, bqQuery:5.00, apiPer1k:0.40, recapPer1k:0.80};
+  const TCO_SCALE={
+    mid:{sku:120000, calls:1500000, apigee:18000, bqGB:800,   bqTB:6,  dataflowMo:600,  dataplex:4000},
+    ent:{sku:1000000,calls:15000000,apigee:80000, bqGB:20000, bqTB:60, dataflowMo:3000, dataplex:20000}
+  };
+
+  function tcoCalc(){
+    const sc=TCO_SCALE[$("tScale").value]||TCO_SCALE.ent;
+    const sku=+$("tSku").value||0, calls=+$("tCalls").value||0;
+    const tokens=8000, passes=2, refresh=4;
+    const build = sku*tokens*passes/1e6*TCO_PRICE.vertex
+                + (sc.bqGB*TCO_PRICE.bqStore*3 + sc.bqTB*TCO_PRICE.bqQuery*3)
+                + sc.dataflowMo*3 + sc.dataplex;
+    const transact = sc.apigee
+                   + calls*12/1000*TCO_PRICE.apiPer1k
+                   + (calls*0.1)*12/1000*TCO_PRICE.recapPer1k;
+    const compound = sku*tokens*refresh/1e6*TCO_PRICE.vertex
+                   + sc.bqTB*12*TCO_PRICE.bqQuery + sc.bqGB*TCO_PRICE.bqStore*12
+                   + sc.dataflowMo*12;
+    const annual = transact + compound;
+    return {build, annual, tco3: build + 3*annual};
+  }
+
+  function tco(){
+    const t=tcoCalc();
+    $("tRun").textContent=fmB(t.annual);
+    $("tBuild").textContent=fmB(t.build);
+    $("t3yr").textContent=fmB(t.tco3);
+    const capturedY3=model().yrs[3].ready*1e6;
+    const pct=capturedY3>0? t.annual/capturedY3*100 : 0;
+    $("tRatio").textContent=pct.toFixed(1)+"%";
+    roi();
+  }
+
+  function roi(){
+    const m=model(), t=tcoCalc();
+    const services=+$("rSvc").value||0;
+    const invest = services + t.tco3;
+    const ret = m.cost*1e6*MARGIN;
+    const roiX = invest>0? ret/invest : 0;
+    const net = ret - invest;
+    const y3gp = m.yrs[3].gap*1e6*MARGIN;
+    const payMo = y3gp>0? Math.max(1,Math.round(invest/y3gp*12)) : 0;
+    $("rRoi").textContent = roiX>=10? Math.round(roiX)+"x" : roiX.toFixed(1)+"x";
+    $("rNet").textContent = fmB(net);
+    $("rInvest").textContent = fmB(invest);
+    $("rPay").textContent = payMo<12? payMo+" mo" : (payMo/12).toFixed(1)+" yr";
+  }
+
+  function setScale(){
+    const sc=TCO_SCALE[$("tScale").value]||TCO_SCALE.ent;
+    $("tSku").value=sc.sku; $("tCalls").value=sc.calls; tco();
+  }
+
+  // Era charts
+  function eraCharts(){
+    const gRev=[0.4,1.5,3.2,6.1,10.6,16.6,21.8,23.7,29.3];
+    let s="", W=520,H=170,pad=26,bw=34;
+    gRev.forEach((v,i)=>{
+      const x=pad+i*((W-pad*2)/9), h=(v/30)*(H-52);
+      s+=`<rect x="${x}" y="${H-30-h}" width="${bw}" height="${Math.max(h,2)}" fill="#2a282a" rx="2"></rect>`;
+      s+=`<text x="${x+bw/2}" y="${H-14}" text-anchor="middle">${2002+i}</text>`;
+    });
+    $("c2003").innerHTML=s;
+    const line=(el,tl,vals,labels,maxV)=>{
+      const pts=vals.map((v,i)=>`${pad+i*((W-pad*2)/(vals.length-1))},${H-30-(v/maxV)*(H-56)}`).join(" ");
+      $(el).setAttribute("points",pts);
+      let t="";
+      labels.forEach((L,i)=>{ if(L) t+=`<text x="${pad+i*((W-pad*2)/(vals.length-1))}" y="${H-12}" text-anchor="middle">${L}</text>`;});
+      $(tl).innerHTML=t;
+    };
+    line("c2010","c2010t",[2.9,6.1,10.7,16.2,27.1,35.1,43.4,50.3,52.2,53.3,55.7],["2010","","","","2014","","","","2018","","2020"],60);
+    line("c2005","c2005t",[2.4,3.2,3.9,4.8,5.8,7.2,9.0,11.0,14.9,15.4,16.3],["2005","","","","2013","","","","2021","","2025"],18);
+    line("cnow","cnowt",[1,2.2,3.8,5.5,7.6,10,12.1,14.2],["Oct 24","","Apr 25","","Oct 25","","Mar 26",""],15);
+    $("cnow").setAttribute("stroke","#2a282a");
+  }
+
+  // Generated sheets
+  function today(){return new Date().toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"});}
+  function openSheet(html){$("sheet").innerHTML=html;$("sheetzone").classList.add("open");$("sheetzone").scrollIntoView({behavior:"smooth"});}
+  function closeSheet(){$("sheetzone").classList.remove("open");}
+
+  function makeBC(){
+    const m=model(), nm="[Client]";
+    openSheet(`
+      <h3>The agent channel: a one-page business case</h3>
+      <div class="meta">${nm} · prepared by ACOMM · ${today()} · figures from illustrative inputs, replaced by your own analytics in the 30-day measurement</div>
+      <h5>The situation</h5>
+      <p>AI assistants already refer customers to retail: Adobe measured AI-referred traffic up 393% year on year (Q1 2026) across one trillion+ US retail visits, converting 42–54% better than other traffic. Transaction rails (ChatGPT Instant Checkout, Google UCP, agent payment mandates) are live. No retailer in our set is agent-ready. First mover takes an uncontested position.</p>
+      <h5>The opportunity, in our numbers</h5>
+      <table>
+        <tr><th>Measure</th><th class="num">Value</th></tr>
+        <tr><td>Revenue via the AI channel, Year 3, if agent-ready</td><td class="num">${fm(m.yrs[3].ready)} / yr</td></tr>
+        <tr><td>Cumulative cost of doing nothing, today → Year 3</td><td class="num">${fm(m.cost)}</td></tr>
+        <tr><td>Annual revenue swing when autonomous agent-to-agent buying arrives</td><td class="num">${fm(m.swing)} / yr</td></tr>
+        <tr><td>Of which gross profit (38% margin)</td><td class="num">${fm(m.gp)} / yr</td></tr>
+      </table>
+      <h5>Cost to run (TCO)</h5>
+      <table>
+        <tr><th>Measure</th><th class="num">Value</th></tr>
+        <tr><td>Annual run cost at steady state</td><td class="num">${fmB(tcoCalc().annual)} / yr</td></tr>
+        <tr><td>One-off build, year one</td><td class="num">${fmB(tcoCalc().build)}</td></tr>
+        <tr><td>3-year total cost of ownership</td><td class="num">${fmB(tcoCalc().tco3)}</td></tr>
+        <tr><td>Run cost vs Year-3 revenue captured</td><td class="num">${(tcoCalc().annual/(m.yrs[3].ready*1e6)*100).toFixed(1)}%</td></tr>
+      </table>
+      <p style="font-size:12.5px;color:var(--muted-on-paper)">List-price estimate, refined against your committed-use rates. ACOMM runs on Google Cloud; consumption can be part-funded via partner programs.</p>
+      <h5>Why now</h5>
+      <p>Agent advantage compounds: trust records, learned defaults and model memory cannot be bought later. The integration can be copied in a quarter; the head start cannot. Year 1 starts when agent checkout goes live in our market, and readiness work takes two to three quarters.</p>
+      <h5>The ask</h5>
+      <p>Approve a 30-day measurement (fixed fee): agent share of shelf vs competitors, AI-referral baseline from your own analytics, and this model re-run on measured data. Decision on the readiness programme follows the evidence, not this page.</p>
+      <div class="sig"><div>Sponsor</div><div>Date</div></div>
+    `);
+  }
+
+  const SOWS={
+    MEASURE:{dur:"30 days",fee:"from $95,000 (fixed)",scope:["AI referrer taxonomy and analytics instrumentation (GA4/BigQuery or Adobe)","Baseline: AI-referred sessions, conversion, revenue per visit vs all channels, 12 months back","Agent share of shelf: scripted assistant query panel across ChatGPT, Gemini, Perplexity, Copilot","Competitor agent-readiness scorecard","Uplift model populated with client data; executive readout"],out:"The KPI the board tracks from now on, plus the measured business case for Package 02."},
+    READY:{dur:"90 days",fee:"from $350,000 (fixed)",scope:["Structured product data audit and remediation across the catalogue","AI enrichment pipeline (attributes, fit data, policies) scored against real assistant answers","Shopping Graph and feed completeness; feed freshness operations","Store-level inventory exposed to machines; local availability feeds","Agent QA: locate and fix where agents fail on the estate"],out:"A measurable lift in agent share of shelf and task completion vs the Package 01 baseline."},
+    TRANSACT:{dur:"2 quarters",fee:"from $650,000 (fixed + milestone)",scope:["UCP readiness assessment and integration; ACP application where applicable","Agent checkout pilot live on one category","Agent API gateway: authentication, quotas, monitoring","Payment mandate verification with the client PSP","Governance: agent access policy, fraud rules, named ownership"],out:"The first retailer in the competitive set an agent can buy from, end to end."},
+    COMPOUND:{dur:"12 months",fee:"from $40,000 / month (retainer)",scope:["Monthly agent share-of-shelf and funnel reporting against the model","Agent QA regression on every major platform change","Feed and enrichment operations; catalogue quality held","Protocol currency: UCP, ACP and mandate spec revisions absorbed","Quarterly board re-run of the model with actuals"],out:"The compounding advantage, maintained: data history, trust record and defaults a late mover cannot buy."}
+  };
+
+  function makeSOW(key){
+    const w=SOWS[key], nm="[Client]";
+    openSheet(`
+      <h3>Statement of Work · ${key}</h3>
+      <div class="meta">Between ACOMM and ${nm} · drafted ${today()} · duration ${w.dur} · commercials ${w.fee}</div>
+      <h5>Objective</h5><p>${w.out}</p>
+      <h5>Scope of services</h5><ul>${w.scope.map(s=>`<li>${s}</li>`).join("")}</ul>
+      <h5>Approach</h5><p>ACOMM delivers with a blended strategy, data and engineering team on Google Cloud, with weekly working sessions and a fortnightly steering review. Client provides analytics access, catalogue/feed access and a named product owner.</p>
+      <h5>Commercials</h5><p>${w.fee}. Google Cloud consumption billed to the client's existing GCP commitment; ACOMM services may be transacted via Google Cloud Marketplace private offer. Final pricing subject to scoping call.</p>
+      <h5>Acceptance</h5><p>This document is a working draft for discussion, generated on ${today()}, and is not an offer capable of acceptance. Definitive terms follow ACOMM's MSA.</p>
+      <div class="sig"><div>For ${nm}</div><div>For ACOMM</div></div>
+    `);
+  }
+
+  // init
+  ["inRev","inShare","inPrem","inScen"].forEach(id=>$(id).addEventListener("input",recalc));
+  $("tScale").addEventListener("change",setScale);
+  ["tSku","tCalls"].forEach(id=>$(id).addEventListener("input",tco));
+  $("rSvc").addEventListener("input",roi);
+  recalc();
+  eraCharts();
+</script>
+
+</body></html>
